@@ -134,6 +134,7 @@
     background: #ff0;
     box-shadow: 0 0 10px #ff0;
     border-radius: 3px;
+    transform-origin: left center;
   }
 
   /* ================= Power-up status ================= */
@@ -427,7 +428,7 @@
 </div>
 
 <div id="powerups"></div>
-<div id="hint">P&nbsp;PAUSE &nbsp;&bull;&nbsp; M&nbsp;MUTE</div>
+<div id="hint">P&nbsp;PAUSE &nbsp;&bull;&nbsp; M&nbsp;MUTE &nbsp;&bull;&nbsp; <span id="fps">-- FPS</span></div>
 
 <div id="start-screen" class="screen">
   <div class="title">NEON<span class="pink">BLASTER</span></div>
@@ -473,10 +474,27 @@
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
 
+  // The game simulates in CSS pixels (W x H) but can render at a lower
+  // internal resolution (res < 1) and let the GPU upscale — huge win on
+  // big screens / weak GPUs. Quality auto-drops if the frame rate dips.
   let W = 0, H = 0;
+  let res = 1;
+  function applyRes() {
+    canvas.width = Math.max(1, Math.round(W * res));
+    canvas.height = Math.max(1, Math.round(H * res));
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(res, 0, 0, res, 0, 0);
+    ctx.imageSmoothingEnabled = true;
+  }
+  let maxRes = 1;
   function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+    W = window.innerWidth;
+    H = window.innerHeight;
+    // never render more than ~1920px internally; 4K screens upscale
+    maxRes = Math.min(1, 1920 / W);
+    res = Math.min(res, maxRes) || maxRes;
+    applyRes();
   }
   window.addEventListener('resize', resize);
   resize();
@@ -498,7 +516,7 @@
   const MAX_COMBO = 10;
   const SHIP_RADIUS = 16;
   const BULLET_SPEED = 900;
-  const MAX_PARTICLES = 500;
+  let maxParticles = 500;
   const POWERUP_TYPES = {
     triple: { letter: 'T', color: '#ff00ff', label: 'TRIPLE',  duration: 9 },
     rapid:  { letter: 'R', color: '#ffff00', label: 'RAPID',   duration: 9 },
@@ -1027,7 +1045,7 @@
   }
 
   function addExplosion(x, y, color, count) {
-    const room = MAX_PARTICLES - particles.length;
+    const room = maxParticles - particles.length;
     count = Math.min(count, Math.max(0, room));
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
@@ -1172,7 +1190,8 @@
       combo = 1;
       comboWrap.style.opacity = '0';
     } else if (combo > 1) {
-      comboBar.style.width = Math.max(0, 100 - (sinceKill / COMBO_WINDOW) * 100) + '%';
+      // scaleX is GPU-composited; animating width forces layout every frame
+      comboBar.style.transform = 'scaleX(' + Math.max(0, 1 - sinceKill / COMBO_WINDOW).toFixed(3) + ')';
     }
 
     // ship
@@ -1344,7 +1363,8 @@
     for (const k of ['triple', 'rapid', 'slow']) {
       if (timers[k] <= 0) continue;
       const def = POWERUP_TYPES[k];
-      const pct = ((timers[k] / def.duration) * 100).toFixed(0);
+      // 5% steps so the HTML string (and the DOM) only changes ~20x per power-up
+      const pct = Math.round((timers[k] / def.duration) * 20) * 5;
       html += '<div class="pu-item" style="color:' + def.color + ';text-shadow:0 0 8px ' + def.color + '">'
         + def.label
         + '<div class="pu-bar-bg"><div class="pu-bar" style="width:' + pct + '%;background:' + def.color + ';box-shadow:0 0 8px ' + def.color + '"></div></div></div>';
@@ -1485,15 +1505,42 @@
     ctx.restore();
   }
 
-  // ---------- Main loop ----------
+  // ---------- Main loop + adaptive quality ----------
+  // Tracks a smoothed frame time; if we can't hold ~50fps the internal
+  // resolution steps down (and particles shrink) until we can. If the
+  // machine has headroom it climbs back up toward full quality.
+  const fpsEl = $('fps');
   let lastTime = performance.now();
+  let frameEMA = 16.7, qualTimer = 0;
+
   function loop(now) {
-    const dt = Math.min(0.05, (now - lastTime) / 1000);
+    const rawMs = now - lastTime;
+    const dt = Math.min(0.05, rawMs / 1000);
     lastTime = now;
+
     if (state !== 'paused') {
       update(dt);
       draw();
     }
+
+    if (rawMs < 250) { // ignore tab-switch spikes
+      frameEMA += (rawMs - frameEMA) * 0.06;
+      qualTimer += rawMs;
+      if (qualTimer > 1500) {
+        qualTimer = 0;
+        if (frameEMA > 21 && res > 0.55) {
+          res = Math.max(0.55, res - 0.15);
+          maxParticles = 280;
+          applyRes();
+        } else if (frameEMA < 14.5 && res < maxRes) {
+          res = Math.min(maxRes, res + 0.1);
+          if (res >= maxRes) maxParticles = 500;
+          applyRes();
+        }
+        fpsEl.textContent = Math.min(999, Math.round(1000 / frameEMA)) + ' FPS';
+      }
+    }
+
     requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
