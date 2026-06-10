@@ -13,7 +13,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #05050f;
+    background: #04040c;
     font-family: 'Orbitron', 'Courier New', monospace;
     user-select: none;
   }
@@ -25,37 +25,22 @@
     cursor: none;
   }
 
-  /* ---------- Post-processing overlays ---------- */
   #vignette {
     position: fixed;
     inset: 0;
     pointer-events: none;
     background: radial-gradient(ellipse at center,
-      transparent 55%,
-      rgba(0, 0, 30, 0.45) 100%);
+      transparent 58%,
+      rgba(0, 0, 28, 0.5) 100%);
     z-index: 3;
   }
 
-  #scanlines {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0px,
-      transparent 3px,
-      rgba(0, 0, 0, 0.12) 3px,
-      rgba(0, 0, 0, 0.12) 4px
-    );
-    z-index: 3;
-  }
-
-  /* ---------- HUD ---------- */
+  /* ================= HUD ================= */
   #hud {
     position: fixed;
-    top: 14px;
-    left: 22px;
-    right: 22px;
+    top: 26px;
+    left: 30px;
+    right: 30px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -63,46 +48,60 @@
     z-index: 5;
   }
 
-  .hud-block { display: flex; flex-direction: column; gap: 6px; }
-  .hud-block.right { align-items: flex-end; }
-  .hud-block.center { align-items: center; }
+  .panel {
+    background: linear-gradient(180deg, rgba(10, 20, 45, 0.55), rgba(4, 8, 22, 0.65));
+    border: 1px solid rgba(0, 255, 255, 0.22);
+    border-radius: 16px;
+    padding: 14px 28px;
+    box-shadow: 0 0 24px rgba(0, 255, 255, 0.07), inset 0 0 24px rgba(0, 255, 255, 0.04);
+  }
+
+  .panel.yellow { border-color: rgba(255, 255, 0, 0.25); box-shadow: 0 0 24px rgba(255, 255, 0, 0.06), inset 0 0 24px rgba(255, 255, 0, 0.04); }
+  .panel.pink   { border-color: rgba(255, 0, 255, 0.25); box-shadow: 0 0 24px rgba(255, 0, 255, 0.06), inset 0 0 24px rgba(255, 0, 255, 0.04); }
+
+  .hud-block { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
+  .hud-block.center { align-items: center; text-align: center; min-width: 120px; }
+  .hud-block.right { align-items: flex-end; text-align: right; }
 
   .hud-label {
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: #5599aa;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: #5d8fa8;
   }
 
   .hud-value {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 900;
     letter-spacing: 2px;
     color: #0ff;
-    text-shadow: 0 0 8px #0ff, 0 0 24px #0ff;
+    text-shadow: 0 0 10px #0ff, 0 0 30px rgba(0, 255, 255, 0.6);
   }
 
-  #bestVal { color: #f0f; text-shadow: 0 0 8px #f0f, 0 0 24px #f0f; }
-  #levelVal { color: #ff0; text-shadow: 0 0 8px #ff0, 0 0 24px #ff0; }
+  #bestVal  { color: #f0f; text-shadow: 0 0 10px #f0f, 0 0 30px rgba(255, 0, 255, 0.6); }
+  #levelVal { color: #ff0; text-shadow: 0 0 10px #ff0, 0 0 30px rgba(255, 255, 0, 0.6); }
 
   #lives {
-    font-size: 18px;
+    margin-top: 6px;
+    font-size: 17px;
     color: #0ff;
-    letter-spacing: 6px;
-    text-shadow: 0 0 8px #0ff;
+    letter-spacing: 9px;
+    text-shadow: 0 0 10px #0ff;
   }
 
   #shield-tag {
-    font-size: 11px;
+    margin-top: 4px;
+    font-size: 10px;
     letter-spacing: 3px;
     color: #6cf;
     text-shadow: 0 0 8px #6cf;
     display: none;
   }
 
-  /* ---------- Combo ---------- */
+  /* ================= Combo ================= */
   #combo-wrap {
     position: fixed;
-    top: 76px;
+    top: 130px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -114,17 +113,17 @@
 
   #combo {
     color: #ff0;
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 900;
-    letter-spacing: 4px;
-    text-shadow: 0 0 10px #ff0, 0 0 34px #ff0;
+    letter-spacing: 5px;
+    text-shadow: 0 0 12px #ff0, 0 0 40px rgba(255, 255, 0, 0.7);
   }
 
   #combo-bar-bg {
-    width: 160px;
+    width: 190px;
     height: 5px;
-    margin: 6px auto 0;
-    background: rgba(255, 255, 0, 0.15);
+    margin: 8px auto 0;
+    background: rgba(255, 255, 0, 0.14);
     border-radius: 3px;
     overflow: hidden;
   }
@@ -137,14 +136,14 @@
     border-radius: 3px;
   }
 
-  /* ---------- Power-up status ---------- */
+  /* ================= Power-up status ================= */
   #powerups {
     position: fixed;
-    right: 22px;
-    bottom: 20px;
+    right: 30px;
+    bottom: 28px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     align-items: flex-end;
     pointer-events: none;
     z-index: 5;
@@ -153,14 +152,18 @@
   .pu-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
     font-size: 12px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    background: rgba(4, 8, 22, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 10px 18px;
   }
 
   .pu-bar-bg {
-    width: 90px;
+    width: 100px;
     height: 5px;
     background: rgba(255, 255, 255, 0.12);
     border-radius: 3px;
@@ -169,13 +172,13 @@
 
   .pu-bar { height: 100%; border-radius: 3px; }
 
-  /* ---------- Boss HP ---------- */
+  /* ================= Boss HP ================= */
   #boss-wrap {
     position: fixed;
-    top: 14px;
+    top: 118px;
     left: 50%;
     transform: translateX(-50%);
-    width: min(440px, 60vw);
+    width: min(480px, 64vw);
     text-align: center;
     display: none;
     pointer-events: none;
@@ -185,18 +188,19 @@
   #boss-name {
     font-size: 13px;
     font-weight: 700;
-    letter-spacing: 6px;
+    letter-spacing: 7px;
     color: #f33;
-    text-shadow: 0 0 10px #f33;
-    margin-bottom: 5px;
+    text-shadow: 0 0 12px #f33;
+    margin-bottom: 7px;
   }
 
   #boss-bar-bg {
-    height: 10px;
+    height: 11px;
     border: 1px solid rgba(255, 50, 50, 0.6);
-    border-radius: 5px;
+    border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 0 12px rgba(255, 50, 50, 0.4);
+    box-shadow: 0 0 14px rgba(255, 50, 50, 0.4);
+    background: rgba(255, 50, 50, 0.08);
   }
 
   #boss-bar {
@@ -206,19 +210,18 @@
     box-shadow: 0 0 14px #f33;
   }
 
-  /* ---------- Hint bar ---------- */
   #hint {
     position: fixed;
-    left: 22px;
-    bottom: 20px;
+    left: 30px;
+    bottom: 28px;
     font-size: 10px;
-    letter-spacing: 3px;
-    color: #446;
+    letter-spacing: 4px;
+    color: #3a4a66;
     pointer-events: none;
     z-index: 5;
   }
 
-  /* ---------- Overlay screens ---------- */
+  /* ================= Overlay screens ================= */
   .screen {
     position: fixed;
     inset: 0;
@@ -226,126 +229,168 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: rgba(4, 4, 14, 0.85);
-    backdrop-filter: blur(3px);
+    gap: 0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(20, 0, 60, 0.35), transparent 60%),
+      rgba(3, 3, 12, 0.88);
     z-index: 10;
   }
 
   .screen.hidden { display: none; }
 
   .title {
-    font-size: clamp(38px, 8.5vw, 80px);
+    font-size: clamp(40px, 8.5vw, 88px);
     font-weight: 900;
-    letter-spacing: 10px;
+    letter-spacing: 12px;
     color: #0ff;
-    text-shadow: 0 0 10px #0ff, 0 0 30px #0ff, 0 0 70px #08f, 0 0 130px #08f;
-    animation: pulse 1.6s ease-in-out infinite;
+    text-shadow: 0 0 12px #0ff, 0 0 36px #0ff, 0 0 90px #08f;
+    animation: pulse 1.8s ease-in-out infinite;
   }
 
   .title .pink {
     color: #f0f;
-    text-shadow: 0 0 10px #f0f, 0 0 30px #f0f, 0 0 70px #f0f, 0 0 130px #80f;
+    text-shadow: 0 0 12px #f0f, 0 0 36px #f0f, 0 0 90px #80f;
   }
 
   @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.72; }
+    50% { opacity: 0.75; }
   }
 
-  .subtitle {
-    margin-top: 24px;
-    color: #8ff;
-    font-size: 14px;
+  .controls-panel {
+    margin-top: 44px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: rgba(6, 12, 30, 0.55);
+    border: 1px solid rgba(0, 255, 255, 0.16);
+    border-radius: 18px;
+    padding: 22px 44px;
+  }
+
+  .control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .control .key {
+    font-size: 15px;
+    font-weight: 900;
     letter-spacing: 2px;
-    text-shadow: 0 0 8px #0ff;
-    text-align: center;
-    line-height: 2.1;
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff;
+  }
+
+  .control .what {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #5d8fa8;
   }
 
   .pu-legend {
-    margin-top: 22px;
+    margin-top: 30px;
     display: flex;
-    gap: 26px;
+    gap: 16px;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 760px;
   }
 
   .pu-legend div {
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 2px;
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    background: rgba(6, 12, 30, 0.55);
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    padding: 10px 18px;
+    box-shadow: 0 0 16px -6px currentColor;
   }
 
   .pu-legend b {
     display: inline-block;
     width: 26px;
     height: 26px;
-    line-height: 24px;
+    line-height: 23px;
     text-align: center;
     border: 2px solid currentColor;
     border-radius: 50%;
-    margin-right: 8px;
+    margin-right: 12px;
     box-shadow: 0 0 12px currentColor;
   }
 
-  .final-score {
-    margin-top: 14px;
-    font-size: 32px;
+  .tagline {
+    margin-top: 30px;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #8ff;
+    text-shadow: 0 0 10px #0ff;
+  }
+
+  .score-panel {
+    margin-top: 38px;
+    display: flex;
+    gap: 50px;
+    background: rgba(6, 12, 30, 0.55);
+    border: 1px solid rgba(255, 255, 0, 0.2);
+    border-radius: 18px;
+    padding: 26px 54px;
+    text-align: center;
+  }
+
+  .score-panel .col { display: flex; flex-direction: column; gap: 8px; }
+  .score-panel .lbl { font-size: 10px; letter-spacing: 4px; color: #5d8fa8; }
+  .score-panel .val {
+    font-size: 34px;
     font-weight: 900;
     color: #ff0;
-    letter-spacing: 4px;
-    text-shadow: 0 0 10px #ff0, 0 0 32px #ff0;
+    text-shadow: 0 0 12px #ff0;
   }
-
-  .final-sub {
-    margin-top: 10px;
-    font-size: 14px;
-    letter-spacing: 3px;
-    color: #8ff;
-    text-shadow: 0 0 8px #0ff;
-  }
+  .score-panel .val.cyan { color: #0ff; text-shadow: 0 0 12px #0ff; }
+  .score-panel .val.pinkv { color: #f0f; text-shadow: 0 0 12px #f0f; }
 
   .new-best {
-    margin-top: 10px;
+    margin-top: 24px;
     font-size: 20px;
     font-weight: 700;
     color: #f0f;
-    letter-spacing: 5px;
-    text-shadow: 0 0 10px #f0f, 0 0 30px #f0f;
+    letter-spacing: 6px;
+    text-shadow: 0 0 12px #f0f, 0 0 34px #f0f;
     animation: pulse 0.8s ease-in-out infinite;
   }
 
   .neon-btn {
-    margin-top: 36px;
-    padding: 16px 50px;
+    margin-top: 44px;
+    padding: 18px 64px;
     font-family: inherit;
     font-size: 20px;
     font-weight: 900;
-    letter-spacing: 5px;
+    letter-spacing: 6px;
     color: #0ff;
     background: transparent;
     border: 2px solid #0ff;
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
     text-shadow: 0 0 8px #0ff;
-    box-shadow: 0 0 16px rgba(0, 255, 255, 0.5), inset 0 0 16px rgba(0, 255, 255, 0.25);
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.5), inset 0 0 18px rgba(0, 255, 255, 0.22);
     transition: all 0.15s;
   }
 
   .neon-btn:hover {
-    color: #05050f;
+    color: #04040c;
     background: #0ff;
-    box-shadow: 0 0 34px #0ff, 0 0 80px rgba(0, 255, 255, 0.6);
+    box-shadow: 0 0 40px #0ff, 0 0 90px rgba(0, 255, 255, 0.6);
     text-shadow: none;
   }
 
   #gameover-screen .title {
     color: #f33;
-    text-shadow: 0 0 10px #f33, 0 0 30px #f33, 0 0 70px #a00, 0 0 130px #a00;
-  }
-
-  #pause-screen .title {
-    font-size: clamp(30px, 6vw, 56px);
+    text-shadow: 0 0 12px #f33, 0 0 36px #f33, 0 0 90px #a00;
   }
 </style>
 </head>
@@ -353,20 +398,19 @@
 
 <canvas id="game"></canvas>
 <div id="vignette"></div>
-<div id="scanlines"></div>
 
 <div id="hud">
-  <div class="hud-block">
+  <div class="hud-block panel">
     <div class="hud-label">SCORE</div>
     <div class="hud-value" id="score">0</div>
-    <div id="lives">&#9650; &#9650; &#9650;</div>
+    <div id="lives">&#9650;&#9650;&#9650;</div>
     <div id="shield-tag">&#11044; SHIELD ACTIVE</div>
   </div>
-  <div class="hud-block center">
+  <div class="hud-block center panel yellow">
     <div class="hud-label">LEVEL</div>
     <div class="hud-value" id="levelVal">1</div>
   </div>
-  <div class="hud-block right">
+  <div class="hud-block right panel pink">
     <div class="hud-label">BEST</div>
     <div class="hud-value" id="bestVal">0</div>
   </div>
@@ -383,13 +427,17 @@
 </div>
 
 <div id="powerups"></div>
-<div id="hint">P PAUSE &nbsp;&bull;&nbsp; M MUTE</div>
+<div id="hint">P&nbsp;PAUSE &nbsp;&bull;&nbsp; M&nbsp;MUTE</div>
 
 <div id="start-screen" class="screen">
   <div class="title">NEON<span class="pink">BLASTER</span></div>
-  <div class="subtitle">
-    MOVE: MOUSE / TOUCH / &larr; &rarr; / A D &nbsp;&bull;&nbsp; FIRING IS AUTOMATIC<br>
-    CHAIN KILLS FOR COMBOS &bull; SURVIVE THE DREADNOUGHT EVERY 5 LEVELS
+  <div class="tagline">THE INVADERS ARE COMING &mdash; HOLD THE LINE</div>
+  <div class="controls-panel">
+    <div class="control"><span class="key">MOUSE / TOUCH</span><span class="what">STEER</span></div>
+    <div class="control"><span class="key">&larr; &rarr; / A D</span><span class="what">STEER</span></div>
+    <div class="control"><span class="key">AUTO</span><span class="what">FIRE</span></div>
+    <div class="control"><span class="key">P / ESC</span><span class="what">PAUSE</span></div>
+    <div class="control"><span class="key">M</span><span class="what">MUTE</span></div>
   </div>
   <div class="pu-legend">
     <div style="color:#f0f"><b>T</b>TRIPLE SHOT</div>
@@ -398,20 +446,23 @@
     <div style="color:#f60"><b>B</b>BOMB</div>
     <div style="color:#0f6"><b>W</b>SLOW-MO</div>
   </div>
-  <button class="neon-btn" id="start-btn">START</button>
+  <button class="neon-btn" id="start-btn">LAUNCH</button>
 </div>
 
 <div id="gameover-screen" class="screen hidden">
   <div class="title">GAME OVER</div>
-  <div class="final-score">SCORE <span id="final-score">0</span></div>
-  <div class="final-sub">LEVEL <span id="final-level">1</span> &nbsp;&bull;&nbsp; MAX COMBO x<span id="final-combo">1</span></div>
+  <div class="score-panel">
+    <div class="col"><span class="lbl">SCORE</span><span class="val" id="final-score">0</span></div>
+    <div class="col"><span class="lbl">LEVEL</span><span class="val cyan" id="final-level">1</span></div>
+    <div class="col"><span class="lbl">MAX COMBO</span><span class="val pinkv">x<span id="final-combo">1</span></span></div>
+  </div>
   <div class="new-best hidden" id="new-best">&#9733; NEW BEST &#9733;</div>
   <button class="neon-btn" id="restart-btn">PLAY AGAIN</button>
 </div>
 
 <div id="pause-screen" class="screen hidden">
-  <div class="title">PAUSED</div>
-  <div class="subtitle">PRESS P OR ESC TO RESUME</div>
+  <div class="title" style="font-size:clamp(30px,6vw,56px)">PAUSED</div>
+  <div class="tagline">PRESS P OR ESC TO RESUME</div>
 </div>
 
 <script>
@@ -442,11 +493,12 @@
   const newBestEl = $('new-best');
 
   // ---------- Constants ----------
-  const NEON_COLORS = ['#00ffff', '#ff00ff', '#ffff00', '#00ff66', '#ff6600', '#ff0066'];
+  const NEON_COLORS = ['#00ffff', '#ff00ff', '#ffff00', '#00ff66', '#ff9900', '#ff0066'];
   const COMBO_WINDOW = 2000;
   const MAX_COMBO = 10;
   const SHIP_RADIUS = 16;
   const BULLET_SPEED = 900;
+  const MAX_PARTICLES = 500;
   const POWERUP_TYPES = {
     triple: { letter: 'T', color: '#ff00ff', label: 'TRIPLE',  duration: 9 },
     rapid:  { letter: 'R', color: '#ffff00', label: 'RAPID',   duration: 9 },
@@ -456,8 +508,264 @@
   };
   const POWERUP_KEYS = Object.keys(POWERUP_TYPES);
 
+  // =========================================================
+  //  SPRITE FACTORY — every glow is baked ONCE into an
+  //  offscreen canvas, so the game loop never touches
+  //  shadowBlur (the #1 cause of canvas lag).
+  // =========================================================
+  function makeSprite(w, h, fn) {
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const g = c.getContext('2d');
+    g.translate(w / 2, h / 2);
+    fn(g);
+    return c;
+  }
+
+  // --- pixel-art villain designs ('X' = body, 'O' = glowing eye) ---
+  const VILLAINS = {
+    crab: [
+      '..X.....X..',
+      '...X...X...',
+      '..XXXXXXX..',
+      '.XXOXXXOXX.',
+      'XXXXXXXXXXX',
+      'X.XXXXXXX.X',
+      'X.X.....X.X',
+      '...XX.XX...',
+    ],
+    squid: [
+      '...XX...',
+      '..XXXX..',
+      '.XXXXXX.',
+      'XXOXXOXX',
+      'XXXXXXXX',
+      '..X..X..',
+      '.X.XX.X.',
+      'X.X..X.X',
+    ],
+    octo: [
+      '....XXXX....',
+      '.XXXXXXXXXX.',
+      'XXXXXXXXXXXX',
+      'XXXOOXXOOXXX',
+      'XXXXXXXXXXXX',
+      '...XX..XX...',
+      '..XX.XX.XX..',
+      'XX........XX',
+    ],
+    skull: [
+      '..XXXXXX..',
+      '.XXXXXXXX.',
+      'XXXXXXXXXX',
+      'XOOXXXXOOX',
+      'XOOXXXXOOX',
+      'XXXXXXXXXX',
+      'XXXXXXXXXX',
+      '.XXXXXXXX.',
+      '.X.X..X.X.',
+    ],
+  };
+
+  const spriteCache = new Map();
+  function villainSprite(design, color, eyeColor) {
+    const key = design + '|' + color;
+    if (spriteCache.has(key)) return spriteCache.get(key);
+    const map = VILLAINS[design];
+    const px = 6, margin = 16;
+    const cols = map[0].length, rows = map.length;
+    const c = document.createElement('canvas');
+    c.width = cols * px + margin * 2;
+    c.height = rows * px + margin * 2;
+    const g = c.getContext('2d');
+    g.shadowBlur = 14;
+    g.shadowColor = color;
+    g.fillStyle = color;
+    for (let r = 0; r < rows; r++)
+      for (let col = 0; col < cols; col++)
+        if (map[r][col] === 'X')
+          g.fillRect(margin + col * px, margin + r * px, px, px);
+    g.shadowBlur = 10;
+    g.shadowColor = eyeColor;
+    g.fillStyle = eyeColor;
+    for (let r = 0; r < rows; r++)
+      for (let col = 0; col < cols; col++)
+        if (map[r][col] === 'O')
+          g.fillRect(margin + col * px, margin + r * px, px, px);
+    spriteCache.set(key, c);
+    return c;
+  }
+
+  // --- the rocket ---
+  const shipSprite = makeSprite(120, 120, g => {
+    g.lineWidth = 2.5;
+    g.shadowBlur = 16;
+
+    // side fins
+    g.shadowColor = '#ff00ff';
+    g.strokeStyle = '#ff66ff';
+    g.fillStyle = 'rgba(255,0,255,0.35)';
+    g.beginPath();
+    g.moveTo(-12, 4); g.lineTo(-26, 30); g.lineTo(-12, 22); g.closePath();
+    g.fill(); g.stroke();
+    g.beginPath();
+    g.moveTo(12, 4); g.lineTo(26, 30); g.lineTo(12, 22); g.closePath();
+    g.fill(); g.stroke();
+
+    // hull
+    g.shadowColor = '#00ffff';
+    g.strokeStyle = '#00ffff';
+    const grad = g.createLinearGradient(-13, 0, 13, 0);
+    grad.addColorStop(0, '#04303d');
+    grad.addColorStop(0.5, '#0a6f85');
+    grad.addColorStop(1, '#04303d');
+    g.fillStyle = grad;
+    g.beginPath();
+    g.moveTo(0, -36);
+    g.quadraticCurveTo(13, -16, 13, 2);
+    g.lineTo(13, 22);
+    g.lineTo(-13, 22);
+    g.lineTo(-13, 2);
+    g.quadraticCurveTo(-13, -16, 0, -36);
+    g.closePath();
+    g.fill(); g.stroke();
+
+    // nose cone
+    g.shadowColor = '#ff00ff';
+    g.strokeStyle = '#ff66ff';
+    g.fillStyle = '#b3008f';
+    g.beginPath();
+    g.moveTo(0, -36); g.lineTo(10, -17); g.quadraticCurveTo(0, -22, -10, -17); g.closePath();
+    g.fill(); g.stroke();
+
+    // window
+    g.shadowColor = '#00ffff';
+    g.strokeStyle = '#aaffff';
+    g.fillStyle = '#021018';
+    g.beginPath();
+    g.arc(0, -2, 6.5, 0, Math.PI * 2);
+    g.fill(); g.stroke();
+    g.fillStyle = 'rgba(0,255,255,0.55)';
+    g.beginPath();
+    g.arc(-2, -4, 2.4, 0, Math.PI * 2);
+    g.fill();
+
+    // hull stripe
+    g.shadowBlur = 0;
+    g.strokeStyle = 'rgba(0,255,255,0.5)';
+    g.lineWidth = 1.5;
+    g.beginPath();
+    g.moveTo(-13, 12); g.lineTo(13, 12);
+    g.stroke();
+
+    // engine nozzle
+    g.shadowBlur = 10;
+    g.shadowColor = '#ff9933';
+    g.strokeStyle = '#ff9933';
+    g.fillStyle = '#3a1d05';
+    g.lineWidth = 2;
+    g.beginPath();
+    g.moveTo(-8, 22); g.lineTo(8, 22); g.lineTo(6, 28); g.lineTo(-6, 28); g.closePath();
+    g.fill(); g.stroke();
+  });
+
+  // --- glow-dot sprites for particles / orbs ---
+  function glowDot(color, size) {
+    return makeSprite(size, size, g => {
+      const r = size / 2;
+      const grad = g.createRadialGradient(0, 0, 0, 0, 0, r);
+      grad.addColorStop(0, '#ffffff');
+      grad.addColorStop(0.25, color);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      g.fillStyle = grad;
+      g.fillRect(-r, -r, size, size);
+    });
+  }
+  const particleSprites = {};
+  for (const c of [...NEON_COLORS, '#ffffff', '#ff3333', '#ff6600']) particleSprites[c] = glowDot(c, 32);
+  const enemyOrbSprite = glowDot('#ff00ff', 28);
+  const flameSprite = glowDot('#ff9933', 36);
+
+  // --- player laser bolt ---
+  const boltSprite = makeSprite(20, 36, g => {
+    g.shadowBlur = 8;
+    g.shadowColor = '#00ffaa';
+    const grad = g.createLinearGradient(0, -14, 0, 14);
+    grad.addColorStop(0, '#ffffff');
+    grad.addColorStop(1, '#00ffaa');
+    g.strokeStyle = grad;
+    g.lineWidth = 4;
+    g.lineCap = 'round';
+    g.beginPath();
+    g.moveTo(0, -12); g.lineTo(0, 12);
+    g.stroke();
+  });
+
+  // --- power-up tokens ---
+  const puSprites = {};
+  for (const key of POWERUP_KEYS) {
+    const def = POWERUP_TYPES[key];
+    puSprites[key] = makeSprite(56, 56, g => {
+      g.shadowBlur = 12;
+      g.shadowColor = def.color;
+      g.strokeStyle = def.color;
+      g.lineWidth = 2.5;
+      g.beginPath();
+      g.arc(0, 0, 16, 0, Math.PI * 2);
+      g.stroke();
+      g.fillStyle = def.color;
+      g.font = '900 15px Orbitron, monospace';
+      g.textAlign = 'center';
+      g.textBaseline = 'middle';
+      g.fillText(def.letter, 0, 1);
+    });
+  }
+
+  // --- boss: spiked gear body + inner ring (pre-rendered) ---
+  const bossSprite = makeSprite(180, 180, g => {
+    g.shadowBlur = 26;
+    g.shadowColor = '#ff3333';
+    g.strokeStyle = '#ff3333';
+    g.fillStyle = 'rgba(255,51,51,0.1)';
+    g.lineWidth = 3;
+    g.beginPath();
+    const spikes = 12, R = 60, r2 = 46;
+    for (let i = 0; i < spikes * 2; i++) {
+      const rad = i % 2 === 0 ? R : r2;
+      const a = (i / (spikes * 2)) * Math.PI * 2;
+      i === 0 ? g.moveTo(Math.cos(a) * rad, Math.sin(a) * rad)
+              : g.lineTo(Math.cos(a) * rad, Math.sin(a) * rad);
+    }
+    g.closePath();
+    g.fill(); g.stroke();
+  });
+  const bossInnerSprite = makeSprite(110, 110, g => {
+    g.shadowBlur = 16;
+    g.shadowColor = '#ff00ff';
+    g.strokeStyle = '#ff00ff';
+    g.lineWidth = 2.5;
+    g.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * Math.PI * 2;
+      i === 0 ? g.moveTo(Math.cos(a) * 36, Math.sin(a) * 36)
+              : g.lineTo(Math.cos(a) * 36, Math.sin(a) * 36);
+    }
+    g.closePath();
+    g.stroke();
+  });
+  const bossEyeSprite = glowDot('#ffff00', 26);
+  const shieldRingSprite = makeSprite(110, 110, g => {
+    g.shadowBlur = 16;
+    g.shadowColor = '#00ffff';
+    g.strokeStyle = 'rgba(0,255,255,0.8)';
+    g.lineWidth = 2.5;
+    g.beginPath();
+    g.arc(0, 0, 34, 0, Math.PI * 2);
+    g.stroke();
+  });
+
   // ---------- State ----------
-  let state = 'start'; // start | playing | paused | over
+  let state = 'start';
   let score = 0, level = 1, maxCombo = 1;
   let best = parseInt(localStorage.getItem('neonBlasterBest') || '0', 10);
   bestEl.textContent = best;
@@ -466,19 +774,15 @@
   let bullets = [], enemyBullets = [], enemies = [], particles = [], powerups = [], popups = [], stars = [];
   let boss = null, nextBossLevel = 5;
   let spawnTimer = 0, fireTimer = 0, shake = 0;
-  let announce = null; // {text, color, life}
+  let announce = null;
   let muted = false;
 
-  const ship = {
-    x: W / 2, y: 0, targetX: W / 2,
-    lives: 3, shield: false, invuln: 0,
-  };
+  const ship = { x: W / 2, y: 0, targetX: W / 2, lives: 3, shield: false, invuln: 0 };
   const timers = { triple: 0, rapid: 0, slow: 0 };
-
   const keys = {};
   let mouseX = null;
 
-  // ---------- Audio (synthesized, no files) ----------
+  // ---------- Audio ----------
   let actx = null;
   function audio() {
     if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
@@ -517,7 +821,7 @@
     src.start();
   }
   const sfx = {
-    shoot:    () => tone(880, 220, 0.07, 'square', 0.025),
+    shoot:    () => tone(880, 220, 0.07, 'square', 0.02),
     kill:     () => noiseBurst(0.25, 0.12, 3000),
     bigBoom:  () => { noiseBurst(0.7, 0.25, 2000); tone(120, 30, 0.6, 'sawtooth', 0.15); },
     hit:      () => { noiseBurst(0.35, 0.2, 1200); tone(200, 50, 0.3, 'sawtooth', 0.12); },
@@ -573,7 +877,7 @@
 
   // ---------- Game control ----------
   function startGame() {
-    audio(); // unlock audio on user gesture
+    audio();
     score = 0; level = 1; combo = 1; maxCombo = 1; lastKillTime = 0;
     bullets = []; enemyBullets = []; enemies = []; particles = []; powerups = []; popups = [];
     boss = null; nextBossLevel = 5;
@@ -616,13 +920,11 @@
   }
 
   function updateLivesHUD() {
-    livesEl.innerHTML = '&#9650; '.repeat(Math.max(0, ship.lives));
+    livesEl.innerHTML = '&#9650;'.repeat(Math.max(0, ship.lives)) || '&nbsp;';
     shieldTag.style.display = ship.shield ? 'block' : 'none';
   }
 
-  function setAnnounce(text, color) {
-    announce = { text, color, life: 2.2 };
-  }
+  function setAnnounce(text, color) { announce = { text, color, life: 2.2 }; }
 
   // ---------- Difficulty ----------
   function spawnInterval() { return Math.max(260, 1100 - level * 85 - score * 0.15); }
@@ -640,29 +942,30 @@
     const speed = baseEnemySpeed() * (0.8 + Math.random() * 0.5);
     const e = {
       type,
-      r: 14 + Math.random() * 14,
+      r: 16 + Math.random() * 12,
       hp: 1,
-      sides: [3, 4, 5, 6][(Math.random() * 4) | 0],
+      design: ['crab', 'squid', 'octo'][(Math.random() * 3) | 0],
       color: NEON_COLORS[(Math.random() * NEON_COLORS.length) | 0],
-      angle: Math.random() * Math.PI * 2,
-      spin: (Math.random() - 0.5) * 5,
+      eyes: '#ffffff',
       vy: speed,
       vx: (Math.random() - 0.5) * 60,
       flash: 0,
       wobble: Math.random() * Math.PI * 2,
+      rock: Math.random() * Math.PI * 2,
     };
     if (type === 'tank') {
-      e.r = 26 + Math.random() * 10;
+      e.r = 28 + Math.random() * 8;
       e.hp = 3;
       e.vy = speed * 0.55;
-      e.sides = 6;
+      e.design = 'skull';
       e.color = '#ff0066';
+      e.eyes = '#ffff00';
     } else if (type === 'splitter') {
-      e.sides = 5;
-      e.color = '#ff6600';
-      e.r = 20 + Math.random() * 8;
+      e.design = 'octo';
+      e.color = '#ff9900';
+      e.r = 22 + Math.random() * 6;
     } else if (type === 'zigzag') {
-      e.sides = 3;
+      e.design = 'squid';
       e.color = '#00ff66';
       e.vy = speed * 0.85;
     }
@@ -678,14 +981,14 @@
         x: parent.x, y: parent.y,
         r: parent.r * 0.55,
         hp: 1,
-        sides: 5,
+        design: 'squid',
         color: parent.color,
-        angle: Math.random() * Math.PI * 2,
-        spin: dir * 6,
+        eyes: '#ffffff',
         vy: parent.vy * 1.2,
         vx: dir * (90 + Math.random() * 60),
         flash: 0,
         wobble: 0,
+        rock: Math.random() * Math.PI * 2,
       });
     }
   }
@@ -693,7 +996,7 @@
   function spawnBoss() {
     boss = {
       x: W / 2, y: -90,
-      targetY: 110,
+      targetY: 130,
       r: 58,
       maxHp: 28 + level * 8,
       hp: 28 + level * 8,
@@ -718,16 +1021,14 @@
     const shots = timers.triple > 0
       ? [{ dx: 0, vy: -BULLET_SPEED }, { dx: -0.28, vy: -BULLET_SPEED * 0.95 }, { dx: 0.28, vy: -BULLET_SPEED * 0.95 }]
       : [{ dx: 0, vy: -BULLET_SPEED }];
-    for (const s of shots) {
-      bullets.push({
-        x: ship.x, y: ship.y - SHIP_RADIUS,
-        vx: s.dx * BULLET_SPEED, vy: s.vy,
-      });
-    }
+    for (const s of shots)
+      bullets.push({ x: ship.x, y: ship.y - SHIP_RADIUS - 14, vx: s.dx * BULLET_SPEED, vy: s.vy });
     sfx.shoot();
   }
 
   function addExplosion(x, y, color, count) {
+    const room = MAX_PARTICLES - particles.length;
+    count = Math.min(count, Math.max(0, room));
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = 60 + Math.random() * 380;
@@ -737,7 +1038,7 @@
         vy: Math.sin(angle) * speed,
         life: 1,
         decay: 1.2 + Math.random() * 1.6,
-        size: 1.5 + Math.random() * 3,
+        size: 4 + Math.random() * 9,
         color,
       });
     }
@@ -760,7 +1061,7 @@
       comboWrap.style.opacity = '1';
     }
     addPopup(e.x, e.y, '+' + gained, e.color);
-    addExplosion(e.x, e.y, e.color, 25 + combo * 2);
+    addExplosion(e.x, e.y, e.color, 22 + combo * 2);
     shake = Math.min(18, 6 + combo);
     sfx.kill();
     maybeDropPowerup(e.x, e.y);
@@ -816,7 +1117,7 @@
       sfx.bigBoom();
       for (let i = enemies.length - 1; i >= 0; i--) {
         const e = enemies[i];
-        addExplosion(e.x, e.y, e.color, 20);
+        addExplosion(e.x, e.y, e.color, 16);
         addScore(10);
         addPopup(e.x, e.y, '+10', e.color);
       }
@@ -845,7 +1146,6 @@
       addScore(bounty);
       addPopup(bx, by, '+' + bounty, '#ffff00');
       setAnnounce('DREADNOUGHT DOWN', '#00ff66');
-      // guaranteed double drop
       powerups.push({ x: bx - 30, y: by, vy: 130, key: POWERUP_KEYS[(Math.random() * POWERUP_KEYS.length) | 0], pulse: 0 });
       powerups.push({ x: bx + 30, y: by, vy: 130, key: POWERUP_KEYS[(Math.random() * POWERUP_KEYS.length) | 0], pulse: 0 });
     }
@@ -862,13 +1162,11 @@
 
     const slow = slowFactor();
 
-    // timers
     for (const k of ['triple', 'rapid', 'slow'])
       if (timers[k] > 0) timers[k] = Math.max(0, timers[k] - dt);
     if (ship.invuln > 0) ship.invuln -= dt;
     if (announce) { announce.life -= dt; if (announce.life <= 0) announce = null; }
 
-    // combo expiry + bar
     const sinceKill = performance.now() - lastKillTime;
     if (combo > 1 && sinceKill > COMBO_WINDOW) {
       combo = 1;
@@ -878,7 +1176,7 @@
     }
 
     // ship
-    ship.y = H - 64;
+    ship.y = H - 70;
     const kbSpeed = 640;
     if (keys['arrowleft'] || keys['a'])  { ship.targetX -= kbSpeed * dt; mouseX = null; }
     if (keys['arrowright'] || keys['d']) { ship.targetX += kbSpeed * dt; mouseX = null; }
@@ -912,13 +1210,13 @@
         boss.x = W / 2 + Math.sin(boss.t * 0.7) * (W / 2 - boss.r - 30);
         boss.y = boss.targetY + Math.sin(boss.t * 1.7) * 22;
       }
-      boss.angle += dt * 0.8;
+      boss.angle += dt * 0.9;
       boss.fireTimer -= dt;
       if (boss.fireTimer <= 0 && !boss.entering) {
         const dx = ship.x - boss.x, dy = ship.y - boss.y;
         const len = Math.hypot(dx, dy) || 1;
         const spd = (200 + level * 9) * slow;
-        enemyBullets.push({ x: boss.x, y: boss.y + boss.r * 0.6, vx: (dx / len) * spd, vy: (dy / len) * spd, r: 7 });
+        enemyBullets.push({ x: boss.x, y: boss.y + boss.r * 0.5, vx: (dx / len) * spd, vy: (dy / len) * spd, r: 7 });
         boss.fireTimer = Math.max(0.5, 1.25 - level * 0.04);
       }
     }
@@ -957,7 +1255,7 @@
     for (let i = enemies.length - 1; i >= 0; i--) {
       const e = enemies[i];
       e.y += e.vy * slow * dt;
-      e.angle += e.spin * dt;
+      e.rock += dt * 3;
       if (e.flash > 0) e.flash -= dt;
       if (e.type === 'zigzag') {
         e.wobble += dt * 4;
@@ -968,7 +1266,6 @@
       if (e.x < e.r) { e.x = e.r; e.vx = Math.abs(e.vx); }
       if (e.x > W - e.r) { e.x = W - e.r; e.vx = -Math.abs(e.vx); }
 
-      // slipped past the bottom: costs a life
       if (e.y - e.r > H) {
         enemies.splice(i, 1);
         addPopup(e.x, H - 30, 'BREACH!', '#ff3333');
@@ -977,7 +1274,6 @@
         continue;
       }
 
-      // touched the ship
       const dx = e.x - ship.x, dy = e.y - ship.y;
       if (ship.invuln <= 0 && dx * dx + dy * dy < (e.r + SHIP_RADIUS) * (e.r + SHIP_RADIUS)) {
         enemies.splice(i, 1);
@@ -987,7 +1283,6 @@
         continue;
       }
 
-      // player bullets vs enemy
       for (let j = bullets.length - 1; j >= 0; j--) {
         const b = bullets[j];
         const bx = e.x - b.x, by = e.y - b.y;
@@ -995,9 +1290,8 @@
           bullets.splice(j, 1);
           e.hp--;
           if (e.hp > 0) {
-            e.flash = 0.1;
+            e.flash = 0.12;
             addExplosion(b.x, b.y, '#ffffff', 6);
-            sfx.shoot();
           } else {
             enemies.splice(i, 1);
             if (e.type === 'splitter') spawnSplitChildren(e);
@@ -1050,10 +1344,10 @@
     for (const k of ['triple', 'rapid', 'slow']) {
       if (timers[k] <= 0) continue;
       const def = POWERUP_TYPES[k];
-      const pct = (timers[k] / def.duration) * 100;
+      const pct = ((timers[k] / def.duration) * 100).toFixed(0);
       html += '<div class="pu-item" style="color:' + def.color + ';text-shadow:0 0 8px ' + def.color + '">'
         + def.label
-        + '<div class="pu-bar-bg"><div class="pu-bar" style="width:' + pct.toFixed(0) + '%;background:' + def.color + ';box-shadow:0 0 8px ' + def.color + '"></div></div></div>';
+        + '<div class="pu-bar-bg"><div class="pu-bar" style="width:' + pct + '%;background:' + def.color + ';box-shadow:0 0 8px ' + def.color + '"></div></div></div>';
     }
     if (html !== lastPuHTML) {
       puPanel.innerHTML = html;
@@ -1061,83 +1355,43 @@
     }
   }
 
-  // ---------- Draw ----------
+  // ---------- Draw (no shadowBlur in here — sprites only) ----------
   function drawShip() {
-    if (ship.invuln > 0 && Math.floor(ship.invuln * 12) % 2 === 0) return; // blink
-    ctx.save();
-    ctx.translate(ship.x, ship.y);
+    if (ship.invuln > 0 && Math.floor(ship.invuln * 12) % 2 === 0) return;
+
+    // engine flame: flickering glow dots behind the nozzle
+    ctx.globalCompositeOperation = 'lighter';
+    const fy = ship.y + 30;
+    ctx.drawImage(flameSprite, ship.x - 12, fy - 8, 24, 24 + Math.random() * 14);
+    ctx.drawImage(flameSprite, ship.x - 7, fy - 4, 14, 14 + Math.random() * 8);
+    ctx.globalCompositeOperation = 'source-over';
+
+    ctx.drawImage(shipSprite, ship.x - 60, ship.y - 60);
 
     if (ship.shield) {
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = '#00ffff';
-      ctx.strokeStyle = 'rgba(0, 255, 255, 0.7)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(0, 0, SHIP_RADIUS + 12 + Math.sin(performance.now() / 150) * 2, 0, Math.PI * 2);
-      ctx.stroke();
+      const s = 100 + Math.sin(performance.now() / 150) * 5;
+      ctx.drawImage(shieldRingSprite, ship.x - s / 2, ship.y - s / 2, s, s);
     }
-
-    ctx.shadowBlur = 25;
-    ctx.shadowColor = '#00ffff';
-    ctx.strokeStyle = '#00ffff';
-    ctx.fillStyle = 'rgba(0, 255, 255, 0.15)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(0, -SHIP_RADIUS - 4);
-    ctx.lineTo(SHIP_RADIUS, SHIP_RADIUS);
-    ctx.lineTo(0, SHIP_RADIUS * 0.55);
-    ctx.lineTo(-SHIP_RADIUS, SHIP_RADIUS);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    ctx.shadowColor = '#ff6600';
-    ctx.strokeStyle = '#ff9933';
-    ctx.beginPath();
-    ctx.moveTo(-5, SHIP_RADIUS * 0.8);
-    ctx.lineTo(0, SHIP_RADIUS + 6 + Math.random() * 8);
-    ctx.lineTo(5, SHIP_RADIUS * 0.8);
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  function drawPolygon(x, y, r, sides, angle) {
-    ctx.beginPath();
-    for (let i = 0; i < sides; i++) {
-      const a = angle + (i / sides) * Math.PI * 2;
-      i === 0 ? ctx.moveTo(x + Math.cos(a) * r, y + Math.sin(a) * r)
-              : ctx.lineTo(x + Math.cos(a) * r, y + Math.sin(a) * r);
-    }
-    ctx.closePath();
   }
 
   function drawBoss() {
+    const s1 = 200;
     ctx.save();
-    ctx.shadowBlur = 35;
-    ctx.shadowColor = '#ff3333';
-    ctx.strokeStyle = '#ff3333';
-    ctx.fillStyle = 'rgba(255, 51, 51, 0.08)';
-    ctx.lineWidth = 3;
-    drawPolygon(boss.x, boss.y, boss.r, 6, boss.angle);
-    ctx.fill();
-    ctx.stroke();
-    ctx.strokeStyle = '#ff00ff';
-    ctx.shadowColor = '#ff00ff';
-    ctx.lineWidth = 2;
-    drawPolygon(boss.x, boss.y, boss.r * 0.6, 6, -boss.angle * 1.5);
-    ctx.stroke();
-    // core
-    ctx.fillStyle = '#ff3333';
-    ctx.beginPath();
-    ctx.arc(boss.x, boss.y, 8 + Math.sin(boss.t * 5) * 3, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.translate(boss.x, boss.y);
+    ctx.rotate(boss.angle);
+    ctx.drawImage(bossSprite, -s1 / 2, -s1 / 2, s1, s1);
+    ctx.rotate(-boss.angle * 2.4);
+    ctx.drawImage(bossInnerSprite, -60, -60, 120, 120);
     ctx.restore();
+    // angry eyes (never rotate)
+    const blink = 18 + Math.sin(boss.t * 5) * 4;
+    ctx.drawImage(bossEyeSprite, boss.x - 22 - blink / 2, boss.y - 10 - blink / 2, blink, blink);
+    ctx.drawImage(bossEyeSprite, boss.x + 22 - blink / 2, boss.y - 10 - blink / 2, blink, blink);
   }
 
   function draw() {
     // motion trails
-    ctx.shadowBlur = 0;
-    ctx.fillStyle = 'rgba(5, 5, 15, 0.28)';
+    ctx.fillStyle = 'rgba(4, 4, 12, 0.3)';
     ctx.fillRect(0, 0, W, H);
 
     ctx.save();
@@ -1148,86 +1402,66 @@
     }
 
     // stars
-    ctx.shadowBlur = 0;
     for (const s of stars) {
       ctx.fillStyle = 'rgba(255, 255, 255, ' + s.alpha + ')';
       ctx.fillRect(s.x, s.y, s.size, s.size);
     }
 
     // player bullets
-    ctx.shadowBlur = 15;
-    ctx.shadowColor = '#00ffaa';
-    ctx.strokeStyle = '#aaffee';
-    ctx.lineWidth = 3;
     for (const b of bullets) {
-      ctx.beginPath();
-      ctx.moveTo(b.x, b.y);
-      ctx.lineTo(b.x - b.vx * 0.016, b.y - b.vy * 0.016);
-      ctx.stroke();
-    }
-
-    // enemy bullets
-    ctx.shadowBlur = 16;
-    ctx.shadowColor = '#ff00ff';
-    ctx.fillStyle = '#ff66ff';
-    for (const b of enemyBullets) {
-      ctx.beginPath();
-      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // enemies
-    ctx.lineWidth = 2;
-    for (const e of enemies) {
-      const c = e.flash > 0 ? '#ffffff' : e.color;
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = c;
-      ctx.strokeStyle = c;
-      drawPolygon(e.x, e.y, e.r, e.sides, e.angle);
-      ctx.stroke();
-      if (e.type === 'tank') {
-        drawPolygon(e.x, e.y, e.r * 0.55, e.sides, -e.angle);
-        ctx.stroke();
+      if (b.vx === 0) {
+        ctx.drawImage(boltSprite, b.x - 10, b.y - 18);
+      } else {
+        ctx.save();
+        ctx.translate(b.x, b.y);
+        ctx.rotate(Math.atan2(b.vx, -b.vy));
+        ctx.drawImage(boltSprite, -10, -18);
+        ctx.restore();
       }
+    }
+
+    // enemy bullets (additive = hot glowing orbs)
+    ctx.globalCompositeOperation = 'lighter';
+    for (const b of enemyBullets)
+      ctx.drawImage(enemyOrbSprite, b.x - 14, b.y - 14);
+    ctx.globalCompositeOperation = 'source-over';
+
+    // enemy villains
+    for (const e of enemies) {
+      const spr = villainSprite(e.design, e.flash > 0 ? '#ffffff' : e.color, e.eyes);
+      const w = e.r * 2.6;
+      const h = w * spr.height / spr.width;
+      ctx.save();
+      ctx.translate(e.x, e.y);
+      ctx.rotate(Math.sin(e.rock) * 0.16);
+      ctx.drawImage(spr, -w / 2, -h / 2, w, h);
+      ctx.restore();
     }
 
     if (boss) drawBoss();
 
     // powerups
     for (const p of powerups) {
-      const def = POWERUP_TYPES[p.key];
-      const r = 15 + Math.sin(p.pulse) * 2;
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = def.color;
-      ctx.strokeStyle = def.color;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.fillStyle = def.color;
-      ctx.font = '900 14px Orbitron, monospace';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(def.letter, p.x, p.y + 1);
+      const s = 56 + Math.sin(p.pulse) * 5;
+      ctx.drawImage(puSprites[p.key], p.x - s / 2, p.y - s / 2, s, s);
     }
 
-    // particles
+    // particles (additive blending makes overlaps bloom)
+    ctx.globalCompositeOperation = 'lighter';
     for (const p of particles) {
       ctx.globalAlpha = Math.max(0, p.life);
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = p.color;
-      ctx.fillStyle = p.color;
-      ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+      const spr = particleSprites[p.color] || particleSprites['#ffffff'];
+      const s = p.size * 2.4;
+      ctx.drawImage(spr, p.x - s / 2, p.y - s / 2, s, s);
     }
     ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
 
     // score popups
     ctx.font = '700 15px Orbitron, monospace';
     ctx.textAlign = 'center';
     for (const p of popups) {
       ctx.globalAlpha = Math.max(0, p.life);
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = p.color;
       ctx.fillStyle = p.color;
       ctx.fillText(p.text, p.x, p.y);
     }
@@ -1235,14 +1469,14 @@
 
     // announcement
     if (announce) {
-      const a = Math.min(1, announce.life);
-      ctx.globalAlpha = a;
+      ctx.globalAlpha = Math.min(1, announce.life);
       ctx.font = '900 46px Orbitron, monospace';
       ctx.textAlign = 'center';
-      ctx.shadowBlur = 30;
+      ctx.shadowBlur = 25;
       ctx.shadowColor = announce.color;
       ctx.fillStyle = announce.color;
       ctx.fillText(announce.text, W / 2, H * 0.35);
+      ctx.shadowBlur = 0;
       ctx.globalAlpha = 1;
     }
 
