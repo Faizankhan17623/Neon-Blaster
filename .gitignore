@@ -1,0 +1,19 @@
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Node (for the future leaderboard backend)
+node_modules/
+npm-debug.log*
+.env
+.env.local
+
+# Build output (if a bundler is ever added)
+dist/
+build/
