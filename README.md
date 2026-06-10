@@ -6,9 +6,11 @@ A flashy neon arcade space shooter that runs entirely in the browser — **one H
 
 ## 📸 Screenshots
 
-| Start Screen | Gameplay |
-|---|---|
-| ![Start screen](screenshots/start-screen.png) | ![Gameplay](screenshots/gameplay.png) |
+### Start Screen
+![Start screen](start-screen.png)
+
+### Gameplay
+![Gameplay](gameplay.png)
 
 ## 🎮 How to Play
 
