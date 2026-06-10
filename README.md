@@ -4,6 +4,12 @@ A flashy neon arcade space shooter that runs entirely in the browser — **one H
 
 ![Made with](https://img.shields.io/badge/Made%20with-Vanilla%20JS-yellow) ![Canvas](https://img.shields.io/badge/HTML5-Canvas-orange) ![No dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
 
+## 📸 Screenshots
+
+| Start Screen | Gameplay |
+|---|---|
+| ![Start screen](screenshots/start-screen.png) | ![Gameplay](screenshots/gameplay.png) |
+
 ## 🎮 How to Play
 
 | Action | Control |
