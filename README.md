@@ -47,7 +47,7 @@ Destroy enemies before they reach the bottom or touch you. Every enemy that slip
 - **Motion trails** — the frame fades instead of clearing, so everything leaves light streaks
 - **3-layer parallax starfield** for depth
 - **Floating score popups**, combo drain bar, power-up timers, boss HP bar
-- **CRT-style scanlines + vignette** overlay
+- **Vignette** overlay for a focused, screen-edge-darkened look
 - **Fully synthesized sound effects** with the Web Audio API — lasers, explosions, power-up chimes, boss alarms. No audio files.
 
 ## 🛠️ Tech Stack
@@ -79,7 +79,3 @@ Or play it instantly by enabling **GitHub Pages** (Settings → Pages → deploy
 - [ ] More boss patterns
 - [ ] Gamepad support
 - [ ] Mobile fire-button layout
-
-## 📄 License
-
-MIT — do whatever you want with it.
